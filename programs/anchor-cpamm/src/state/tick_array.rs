@@ -10,6 +10,8 @@ pub struct TickArray {
     pub pool: Pubkey,
     /// Starting tick index for this array (must be aligned)
     pub start_tick_index: i32,
+    /// Padding for alignment
+    pub _padding: [u8; 4],
     /// The ticks in this array
     pub ticks: [Tick; TICK_ARRAY_SIZE],
 }
@@ -18,6 +20,7 @@ impl TickArray {
     pub const LEN: usize = 8 + // discriminator
         32 + // pool
         4 +  // start_tick_index
+        4 +  // padding
         (Tick::LEN * TICK_ARRAY_SIZE); // ticks
 
     /// Get tick at a given index, checking bounds

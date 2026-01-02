@@ -8,7 +8,7 @@ pub mod state;
 
 use instructions::*;
 
-declare_id!("DsYswY1EiECPZ7VT5NHKw2Wxcqy2ZCG4NsdQMCvyKewm");
+declare_id!("22222222222222222222222222222222222222222222");
 
 #[program]
 pub mod anchor_clamm {

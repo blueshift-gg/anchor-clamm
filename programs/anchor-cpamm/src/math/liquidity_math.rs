@@ -128,14 +128,15 @@ pub fn get_amount_x_delta(
         round_up,
     )?;
 
-    // Result is in Q64.64, shift back to integer
-    let amount = result >> 64;
-    
-    if amount > u64::MAX as u128 {
+    // Result is already in integer units (not Q64.64)
+    // numerator = L * diff (where diff is Q64.64, so this is L * diff_real * 2^64)
+    // denominator = (upper * lower) >> 64 (which is upper_real * lower_real * 2^64)
+    // result = (L * diff_real * 2^64) / (upper_real * lower_real * 2^64) = L * diff_real / (upper_real * lower_real)
+    if result > u64::MAX as u128 {
         return Err(ClammError::TokenAmountOverflow.into());
     }
     
-    Ok(amount as u64)
+    Ok(result as u64)
 }
 
 /// Amount Y = L * (√P_upper - √P_lower)
